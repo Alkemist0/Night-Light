@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://du1r4ru5f6r3b"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_4iv1s"]
+[ext_resource type="Texture2D" uid="uid://c6ljs07k5qqht" path="res://Sprites/Projectiles/(M1n3c4rt)Firework.png" id="2_2mgmo"]
+[ext_resource type="AudioStream" uid="uid://7q1xkrjw4f20" path="res://Sound/SFX/LightningBolt.wav" id="3_7nis6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nooty"]
+size = Vector2(12, 12)
+
+[node name="LightningBolt" type="RigidBody2D"]
+position = Vector2(-1, -1)
+gravity_scale = 0.0
+continuous_cd = 2
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_4iv1s")
+soundLength = 1.62
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("2_2mgmo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_nooty")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7nis6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

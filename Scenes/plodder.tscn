@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5i5j3kumaarf"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_e1ycl"]
+[ext_resource type="Texture2D" uid="uid://bfetqqc3jhv1l" path="res://Sprites/Projectiles/(BlueAxolotl)Plodder.png" id="2_ueyxv"]
+[ext_resource type="AudioStream" uid="uid://cbchgko7ch2ry" path="res://Sound/SFX/Plodder.wav" id="3_13djs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nooty"]
+size = Vector2(8, 8)
+
+[node name="Plodder" type="RigidBody2D"]
+position = Vector2(-1, -1)
+gravity_scale = 0.5
+continuous_cd = 2
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_e1ycl")
+soundLength = 0.94
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("2_ueyxv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_nooty")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_13djs")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

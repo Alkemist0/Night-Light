@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsa3ph7yv1e64"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_7gsq3"]
+[ext_resource type="Texture2D" uid="uid://bslkbik5fo73h" path="res://Sprites/(BlueAxolotl+M1n3c4rt)EmeryMoth.png" id="2_uvqrl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rqvl"]
+size = Vector2(11.25, 20)
+
+[sub_resource type="Animation" id="Animation_d0p38"]
+resource_name = "Player_Idle"
+length = 1.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_yfor2"]
+resource_name = "Player_Walk"
+length = 0.3
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_i22or"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k2bi2"]
+_data = {
+"Player_Idle": SubResource("Animation_d0p38"),
+"Player_Walk": SubResource("Animation_yfor2"),
+"RESET": SubResource("Animation_i22or")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_7gsq3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_uvqrl")
+hframes = 6
+vframes = 2
+frame = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3.5, 0)
+scale = Vector2(0.8, 0.8)
+shape = SubResource("RectangleShape2D_1rqvl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Player_Walk"
+libraries = {
+"": SubResource("AnimationLibrary_k2bi2")
+}

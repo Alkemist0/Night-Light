@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://byfgvxrcccf21"]
+
+[ext_resource type="Texture2D" uid="uid://pf1qj288rna8" path="res://Sprites/Enemies/(BlueAxolotl+M1n3c4rt)Flight.png" id="1_q0dad"]
+[ext_resource type="Script" path="res://Scripts/Flight.gd" id="2_lpf3f"]
+[ext_resource type="PackedScene" uid="uid://c5i5j3kumaarf" path="res://Scenes/plodder.tscn" id="3_seskf"]
+[ext_resource type="AudioStream" uid="uid://bxibk1n5yjs67" path="res://Sound/SFX/Absorb.wav" id="4_yi1lw"]
+[ext_resource type="AudioStream" uid="uid://bmljdwu1igiyo" path="res://Sound/SFX/BigLight.wav" id="5_8ubqw"]
+[ext_resource type="PackedScene" uid="uid://dh3v3qoli7nq7" path="res://Scenes/transparent_mask.tscn" id="6_hjgqb"]
+[ext_resource type="Script" path="res://Scripts/EnemyDetection.gd" id="7_lg6yc"]
+
+[sub_resource type="Animation" id="Animation_v0ry4"]
+resource_name = "Fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_u77x7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wc75k"]
+_data = {
+"Fade": SubResource("Animation_v0ry4"),
+"RESET": SubResource("Animation_u77x7")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n5bvs"]
+
+[node name="Flight" type="Sprite2D"]
+z_index = 1
+texture = ExtResource("1_q0dad")
+hframes = 5
+vframes = 2
+script = ExtResource("2_lpf3f")
+bolt = ExtResource("3_seskf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wc75k")
+}
+
+[node name="AbsorbSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yi1lw")
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8ubqw")
+
+[node name="TransparentMask" parent="." instance=ExtResource("6_hjgqb")]
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+script = ExtResource("7_lg6yc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(2.5, 2.5)
+shape = SubResource("CircleShape2D_n5bvs")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

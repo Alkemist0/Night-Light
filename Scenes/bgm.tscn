@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8757qkna7xhy"]
+
+[ext_resource type="AudioStream" uid="uid://c0x2j0c07aun7" path="res://Sound/NightLightBGM.wav" id="1_48br7"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_48br7")
+autoplay = true

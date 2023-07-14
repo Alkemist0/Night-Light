@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh3v3qoli7nq7"]
+
+[ext_resource type="Shader" path="res://Sprites/LightMask.gdshader" id="1_ttm1n"]
+[ext_resource type="Texture2D" uid="uid://brmaiwikwinit" path="res://Sprites/(M1n3c4rt)LightMask.png" id="2_3w3cg"]
+[ext_resource type="Script" path="res://Scripts/TransparentMask.gd" id="3_hr2mf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_foh3u"]
+shader = ExtResource("1_ttm1n")
+
+[node name="TransparentMask" type="Sprite2D"]
+z_index = -1
+material = SubResource("ShaderMaterial_foh3u")
+texture = ExtResource("2_3w3cg")
+hframes = 3
+script = ExtResource("3_hr2mf")
